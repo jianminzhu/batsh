@@ -1,0 +1,45 @@
+
+ boot2docker --vbox-share="V:/sogou_branches/zhan_nei/zhannei=/c/Users" -v start
+
+
+export PUBLIC-KEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIFHNQhA15N6L8CsUK/OPB2tufM/94u6H5M029kj6aoAXP0iPfHD5Nj/o0bAT2wnB3n7gH4dUT+cnd8r5Vu+0RjO5xHMZKRaHJ52ACG6DUvhKuTjYDsamnm952grOJGCs1Cf4jb5iLwm5yL79xmzhq3Zq+BUtL32igXH3Qj7/U1AM+0FiFKzjMf3+OiPi50d0Rij3qqGDst0QSOESLj5bxY0nVdeA7hJQ0MmCYDeQTBwozKgOlcykZoQARi/WkLOs7GX98RRU5khoGFV/gAH7eTBigRiRk3CfU34e9ah/mqys2nZcey6w+EdY3Ty0eGvnjQLrIyLwLVEdPuEYOCQf9
+
+
+
+
+FROM gliderlabs/alpine:3.3
+MAINTAINER Adam K Dean <adamkdean@googlemail.com>
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
+
+
+
+docker run -d \
+--name sshserver \
+-e "ssh_key=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIFHNQhA15N6L8CsUK/OPB2tufM/94u6H5M029kj6aoAXP0iPfHD5Nj/o0bAT2wnB3n7gH4dUT+cnd8r5Vu+0RjO5xHMZKRaHJ52ACG6DUvhKuTjYDsamnm952grOJGCs1Cf4jb5iLwm5yL79xmzhq3Zq+BUtL32igXH3Qj7/U1AM+0FiFKzjMf3+OiPi50d0Rij3qqGDst0QSOESLj5bxY0nVdeA7hJQ0MmCYDeQTBwozKgOlcykZoQARi/WkLOs7GX98RRU5khoGFV/gAH7eTBigRiRk3CfU34e9ah/mqys2nZcey6w+EdY3Ty0eGvnjQLrIyLwLVEdPuEYOCQf9" \
+-p 2222:22 \
+anthonyneto/sshserver
+
+ssh -i rancheros9_rsa -p 2222 root@localhost
+
+
+docker run -d \
+--name anssh \
+-e "ssh_key=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIFHNQhA15N6L8CsUK/OPB2tufM/94u6H5M029kj6aoAXP0iPfHD5Nj/o0bAT2wnB3n7gH4dUT+cnd8r5Vu+0RjO5xHMZKRaHJ52ACG6DUvhKuTjYDsamnm952grOJGCs1Cf4jb5iLwm5yL79xmzhq3Zq+BUtL32igXH3Qj7/U1AM+0FiFKzjMf3+OiPi50d0Rij3qqGDst0QSOESLj5bxY0nVdeA7hJQ0MmCYDeQTBwozKgOlcykZoQARi/WkLOs7GX98RRU5khoGFV/gAH7eTBigRiRk3CfU34e9ah/mqys2nZcey6w+EdY3Ty0eGvnjQLrIyLwLVEdPuEYOCQf9" \
+-p 2222:22 \
+-p 8000:8000 \
+-v /zhu/zhannei:/app \
+anodessh
+
+docker exec -ti anssh /bin/bash
+
+
+ 
+
+
+
+
+
+
+ 
